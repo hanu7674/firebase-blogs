@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: hanumanth.live
+Token: 44837ef4df376e765a4159a959d37fd27fa593b008c8635e9c7803850d1fde7f

@@ -1,0 +1,5 @@
+.iframe-template {
+    min-height:100em !important;
+    max-height: 1000em !important;
+    width: 100% !important;
+}
