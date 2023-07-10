@@ -2251,7 +2251,6 @@ export const getCategories = (category) => {
 };
 //visitors count 
 
-
 export const getVisitorsCount = () => {
   return dispatch => {
     dispatch(getVisitorsCountRequest());
@@ -2291,7 +2290,7 @@ export const submitSubscribe = (email) => {
       .then((data) => {
         dispatch(
           notify({
-            message: "Your are subscribed to hanumanth's blogs successfully!",
+            message: "Your are subscribed to blogs successfully!",
             status: "success",
           })
         );
@@ -2977,219 +2976,6 @@ export const mfaAuth = () => {
 
   //   }
 };
-export const addEducation = (education, userId, username) => {
-  return (dispatch, getState) => {
-    education.lastUpdatedBy = {
-      displayName: getState().authState?.user?.displayName,
-      email: getState().authState?.user?.email,
-      photoURL: getState().authState?.user?.photoURL,
-      uid: getState().authState?.user?.id,
-      phone: getState().authState?.user?.phoneNumber,
-      timestamps: serverTimestamp(),
-    };
-    dispatch(educationRequest());
-    updateDoc(userRef(userId), {
-      education: arrayUnion(education),
-    })
-      .then(() => {
-        dispatch(educationSuccess(education));
-        dispatch(getUserDataByUsername(username));
-        dispatch(
-          notify({
-            message: `Education ${education?.schoolName} added successfully.`,
-            status: "success",
-          })
-        );
-      })
-      .catch((error) => {
-        dispatch(educationFailure(error));
-        dispatch(
-          notify({
-            message: `Education ${education?.schoolName} could not be added.`,
-            status: "error",
-          })
-        );
-      });
-  };
-};
-export const editEducation = (education, userId, username) => {
-  return (dispatch, getState) => {
-    education.lastUpdatedBy = {
-      displayName: getState().authState?.user?.displayName,
-      email: getState().authState?.user?.email,
-      photoURL: getState().authState?.user?.photoURL,
-      uid: getState().authState?.user?.id,
-      phone: getState().authState?.user?.phoneNumber,
-      timestamps: serverTimestamp(),
-    };
-    dispatch(educationRequest());
-    const userState = getState().userState;
-
-    const updatedEducations = userState?.profile?.education?.map((item) => {
-      if (item.id === education?.id) {
-        console.log(item);
-        return { ...item, ...education };
-      }
-      return item;
-    });
-    console.log(updatedEducations);
-    updateDoc(userRef(userId), {
-      education: updatedEducations,
-    })
-      .then(() => {
-        dispatch(educationSuccess(education));
-        dispatch(getUserDataByUsername(username));
-        dispatch(
-          notify({
-            message: `Education ${education?.schoolName} updated successfully.`,
-            status: "success",
-          })
-        );
-      })
-      .catch((error) => {
-        dispatch(educationFailure(error));
-        dispatch(
-          notify({
-            message: `Education ${education?.schoolName} update failed.`,
-            status: "error",
-          })
-        );
-      });
-  };
-};
-export const deleteEducation = (education, userId, username) => {
-  return (dispatch, getState) => {
-    dispatch(educationRequest());
-    updateDoc(userRef(userId), {
-      education: arrayRemove(education),
-    })
-      .then(() => {
-        dispatch(educationSuccess(education));
-        dispatch(getUserDataByUsername(username));
-        dispatch(
-          notify({
-            message: `Education ${education?.schoolName} deleted successfully.`,
-            status: "success",
-          })
-        );
-      })
-      .catch((error) => {
-        dispatch(educationFailure(error));
-        dispatch(
-          notify({
-            message: `Education ${education?.schoolName} delete failed.`,
-            status: "error",
-          })
-        );
-      });
-  };
-};
-export const addExperience = (experience, userId, username) => {
-  return (dispatch, getState) => {
-    experience.addedBy = {
-      displayName: getState().authState?.user?.displayName,
-      email: getState().authState?.user?.email,
-      photoURL: getState().authState?.user?.photoURL,
-      uid: getState().authState?.user?.id,
-      phone: getState().authState?.user?.phoneNumber,
-      timestamps: serverTimestamp(),
-    };
-    dispatch(experienceRequest());
-    updateDoc(userRef(userId), {
-      experience: arrayUnion(experience),
-    })
-      .then(() => {
-        dispatch(experienceSuccess(experience));
-        dispatch(getUserDataByUsername(username));
-        dispatch(
-          notify({
-            message: `Experience ${experience?.companyName} added successfully.`,
-            status: "success",
-          })
-        );
-      })
-      .catch((error) => {
-        dispatch(educationFailure(error));
-        dispatch(
-          notify({
-            message: `Experience ${experience?.companyName} could not be added.`,
-            status: "error",
-          })
-        );
-      });
-  };
-};
-export const editExperience = (experience, userId, username) => {
-  return (dispatch, getState) => {
-    experience.lastUpdatedBy = {
-      displayName: getState().authState?.user?.displayName,
-      email: getState().authState?.user?.email,
-      photoURL: getState().authState?.user?.photoURL,
-      uid: getState().authState?.user?.id,
-      phone: getState().authState?.user?.phoneNumber,
-      timestamps: serverTimestamp(),
-    };
-    dispatch(experienceRequest());
-    const userState = getState().userState;
-    // console.log(experience, userId, username, educations);
-
-    const updatedExperiences = userState?.profile?.experience?.map((item) => {
-      if (item.id === experience?.id) {
-        return { ...item, ...experience };
-      }
-      return item;
-    });
-    updateDoc(userRef(userId), {
-      experience: updatedExperiences,
-    })
-      .then(() => {
-        dispatch(experienceSuccess(experience));
-        dispatch(getUserDataByUsername(username));
-        dispatch(
-          notify({
-            message: `Experience ${experience?.companyName} updated successfully.`,
-            status: "success",
-          })
-        );
-      })
-      .catch((error) => {
-        dispatch(experienceFailure(error));
-        dispatch(
-          notify({
-            message: `Experience ${experience?.companyName} update failed.`,
-            status: "error",
-          })
-        );
-      });
-  };
-};
-export const deleteExperience = (experience, userId, username) => {
-  return (dispatch, getState) => {
-    dispatch(experienceRequest());
-    updateDoc(userRef(userId), {
-      experience: arrayRemove(experience),
-    })
-      .then(() => {
-        dispatch(experienceSuccess(experience));
-        dispatch(getUserDataByUsername(username));
-        dispatch(
-          notify({
-            message: `Experience with ${experience?.companyName} deleted successfully.`,
-            status: "success",
-          })
-        );
-      })
-      .catch((error) => {
-        dispatch(experienceFailure(error));
-        dispatch(
-          notify({
-            message: `Experience with ${experience?.companyName} delete failed.`,
-            status: "error",
-          })
-        );
-      });
-  };
-};
 export const updateProfile = (profile, userId, username) => {
   return (dispatch, getState) => {
     profile.lastUpdatedBy = {
@@ -3240,54 +3026,26 @@ export const updateProfile = (profile, userId, username) => {
 export const getNotificaions = () => {
   return (dispatch, getState) => {
   const role = getState().authState?.user?.roles?.["ADMIN"];
+    dispatch(notificationsFetchRequest());
+const getAllNotificationsQuery = query(getAllNotifications(),where("deleted", "==", false));
 
-        dispatch(notificationsFetchRequest());
-    const getAllQuery = query(getAllNotifications(),where("deleted", "==", false),where("toAll", "==", true), orderBy('timestamp', 'asc'), limit(5));
-    const getAllAdminsQuery = query(getAllNotifications(),where("deleted", "==", false),where("toAllAdmins", "==", (role === 'ADMIN')), orderBy('timestamp', 'asc'), limit(5));
-    const getAllUserQuery = query(getAllNotifications(),where("deleted", "==", false),where("users", "array-contains", [getState().authState?.user?.user?.uid ? getState().authState?.user?.user?.uid : getState().authState?.user?.id]), orderBy('timestamp', 'asc'), limit(5));
+const getAllNotificationsData = [];
 
-    
-    const unsubscribeCallbacks = [];
-    const getAllNotificationsData = [];
+const getAllNotificationsQueryResult = onSnapshot(getAllNotificationsQuery, (snapshot) => {
+  snapshot.forEach((doc) => {
+    if (doc.data().toAll || doc.data().toAllAdmins || doc.data().users.includes(getState().authState?.user?.user?.uid ? getState().authState?.user?.user?.uid : getState().authState?.user?.id)) {
+      getAllNotificationsData.push({ id: doc.id, ...doc.data() });
+    }
+  });
+  dispatch(notificationsFetchSuccess(getAllNotificationsData));
+}, (error) => {
+  dispatch(notificationsFetchFailure(error));
+  dispatch(notify({ status: "error", message: error.message }));
+});
 
-    const getAllUnsubscribe = onSnapshot(getAllQuery, (titleSnapshot) => {
-      titleSnapshot.forEach((doc) => {
-        getAllNotificationsData.push({ id: doc.id, ...doc.data() });
-      });
-      // dispatch(notificationsFetchSuccess(getAllNotificationsData, "getAll"));
+return getAllNotificationsQueryResult;
 
-    }, (error) => {
-      dispatch(notificationsFetchFailure(error));
-      dispatch(notify({ status: "error", message: error.message }));
-    });
 
-    const getAllAdminsUnsubscribe = onSnapshot(getAllAdminsQuery, (userSnapshot) => {
-      userSnapshot.forEach((doc) => {
-        getAllNotificationsData.push({ id: doc.id, ...doc.data() });
-      });
-      // dispatch(notificationsFetchSuccess(getAllAdminNotifications, "getAllAdmins"));
-
-    }, (error) => {
-      dispatch(notificationsFetchFailure(error));
-      dispatch(notify({ status: "error", message: error.message }));
-    });
-
-    const getAllUsersUnsubscribe = onSnapshot(getAllUserQuery, (tagSnapshot) => {
-      tagSnapshot.forEach((doc) => {
-        getAllNotificationsData.push({ id: doc.id, ...doc.data() });
-      });
-      // dispatch(notificationsFetchSuccess(getAllUserNotifications, "getAllUser"));
-
-    }, (error) => {
-      dispatch(notificationsFetchFailure(error));
-      dispatch(notify({ status: "error", message: error.message }));
-    });
-    
-    dispatch(notificationsFetchSuccess(getAllNotificationsData));
-    unsubscribeCallbacks.push(getAllUnsubscribe);
-    unsubscribeCallbacks.push(getAllAdminsUnsubscribe);
-    unsubscribeCallbacks.push(getAllUsersUnsubscribe);
-    return unsubscribeCallbacks;
   };
 };
 
@@ -3348,7 +3106,7 @@ export const login = (email, password, pathname) => {
         dispatch(redirectSuccess(pathname));
         dispatch(dismissNotification("loading"));
         dispatch(
-          notify("Welcome to the Hanumanth's blogs webapp", "success", {
+          notify("Welcome to the Blogs webapp", "success", {
             position: "bottom-center",
             showDismissButton: false,
           })
@@ -3978,7 +3736,7 @@ export const signup = (data, path) => {
         dispatch(createNewUserSuccess(user));
           dispatch(dismissNotification("loading"));
           dispatch(
-            notify(`Welcome ${data.firstName} to the Hanumanth's blog webapp`, "success", {
+            notify(`Welcome ${data.firstName} to the blog webapp`, "success", {
               position: "bottom-center",
               showDismissButton: false,
             })
@@ -4146,7 +3904,7 @@ export const verifyAuth = () => {
         dispatch(verifySuccess());
         dispatch(dismissNotification("loading"));
         dispatch(
-          notify("Welcome back to the Hanumanth's blogs webapp", "success", {
+          notify("Welcome back to the Blogs webapp", "success", {
             position: "bottom-center",
             showDismissButton: false,
           })

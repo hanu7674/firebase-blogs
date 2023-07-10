@@ -49,6 +49,8 @@ const NameCell = ({ rowData, dataKey, ...props }) => {
     );
   };
 const TemplatesList = () => {
+  const authUser = useSelector(state => state.authState?.user);
+
   const [showDeleteModal, setShowDeleteModal ] = useState(false);
   const [selectedTemplateId, setSelectedTemplateId] = useState([]);
   const [sortColumn, setSortColumn] = useState();
@@ -65,7 +67,7 @@ const TemplatesList = () => {
   useEffect(() =>{
     dispatch(getTemplates());
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[authUser != null])
   const handleDeleteTemplate = (template) => {
     setSelectedTemplateId(template?.id)
     setShowDeleteModal(true);
@@ -187,12 +189,12 @@ const TemplatesList = () => {
       }}
     </Cell>
   </Column>
-  <Column  fixed flexGrow sortable>
+  <Column  fixed resizable minWidth={100} sortable>
           <HeaderCell>Name</HeaderCell>
           <Cell  dataKey="name"/>
         </Column>
         <ColumnGroup header="Posted By" align="center">
-        <Column flexGrow colSpan={2}>
+        <Column resizable minWidth={100} colSpan={2}>
           <HeaderCell>First Name</HeaderCell>
           <Cell >
             {
@@ -200,7 +202,7 @@ const TemplatesList = () => {
             }
             </Cell>
         </Column>
-        <Column flexGrow>
+        <Column resizable minWidth={100}>
           <HeaderCell>Last Name</HeaderCell>
           <Cell >
             {
@@ -209,7 +211,7 @@ const TemplatesList = () => {
             </Cell>        
             </Column>
       </ColumnGroup>
-        <Column flexGrow>
+        <Column resizable minWidth={100}>
           <HeaderCell>Template link</HeaderCell>
           <Cell>
             {

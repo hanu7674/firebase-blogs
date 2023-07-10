@@ -67,19 +67,19 @@ const Contact = () =>{
     return(
         <div className="container">
         <div className="row mt-5">
-            <div className="col-md-6 col-sm-12" data-aos="fade-right">
+            <div className="col-md-12 col-sm-12" data-aos="fade-right">
             <Lottie
                   options={defaultOptions}
                   isClickToPauseDisabled={false}
-                  title="connect with lingala hanumantha reddy "
+                  title="contact with lingala hanumantha reddy "
                 />
             </div>
-            <div className="col-md-6 col-sm-12" data-aos="fade-left">
+            <div className="col-md-12 col-sm-12" data-aos="fade-left">
                 <div className="contact-form">               
                 <div className="row mb-4">
                 <div className="col-md-12 col-sm-12 mb-4">
-                <p className=" fs-1">Contact Me</p>
-                <span className="fs-5">Thank you for viewing my my portfolio.<br></br>
+                <p className=" fs-1">Contact Developer</p>
+                <span className="fs-5">Thank you for viewing my <b>Blogs - for building connections.</b><br></br>
                 I really hope you've  enjoyed looking of my work.</span>
                 </div>
                 <div className="col-md-12 col-sm-12">
@@ -101,7 +101,7 @@ const Contact = () =>{
               <div className="social-icon">
               {socialMediaLinks.map((media) => {
         return (
-            <a href={media.link} referrerPolicy="no-referrer" target="_blank" rel="noreferrer">
+            <a href={media.link} key={media.name} referrerPolicy="no-referrer" target="_blank" rel="noreferrer">
                 <span style={{color:  media.backgroundColor}}>
                 {
                     media.icon

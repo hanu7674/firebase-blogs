@@ -19,6 +19,7 @@ import {
   // createButton
  } from 'react-social-login-buttons';
 import Avatar from 'react-avatar';
+import Logo from "../../Assets/images/logo/logo-transparent-png.png";
 
 // const config = {
 //   text: "Log in with Phone",
@@ -101,7 +102,7 @@ function SignInFormBase() {
         dispatch(getUserMetaData(email))
         setPasswordFormShow(true)        
     } else {
-      dispatch(notify({ title: "Hanumanth's Webapp", message: "Check your email! and Try again correctly.", status: 'warning'}));
+      dispatch(notify({ title: "Blogs - For building connections", message: "Check your email! and Try again correctly.", status: 'warning'}));
     }
   }
   const showEmailInput = () => {
@@ -122,6 +123,9 @@ function SignInFormBase() {
             {/* <Logo props={this.props} /> */}
             {/* <p>Logo here</p> */}
             <div>
+            <div className='mb-2'>
+            <img style={{height: "64px", width: "300px"}} src={Logo}/>
+</div>
               <Card.Title tag="h3 mt-5">Login</Card.Title>
 
               <div className="mt-4">

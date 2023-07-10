@@ -17,6 +17,8 @@ import {
 import { notify } from "reapop";
 
 import "../index.css";
+import Logo from "../../Assets/images/logo/logo-transparent-png.png";
+
 import { GithubLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 const SignUpPage = () => (
   <div>
@@ -135,6 +137,9 @@ const SignUpFormBase = () => {
             {/* <Logo props={this.props} /> */}
             {/* <p>Logo here</p> */}
             <div>
+            <div className='mb-2'>
+            <img style={{height: "64px", width: "300px"}} src={Logo}/>
+</div>
               <Card.Title tag="h3 mt-2">Sign-Up</Card.Title>
               <div className="text-secondary">
                 Please fill in this form to create an account!

@@ -39,7 +39,7 @@ import EditTemplate from "../Templates/EditTemplate";
 import { addVisitor, removeVisitor } from "../redux/ActionCreators";
 setUpNotifications({
   defaultProps: {
-    title: "Hanumanth's blogs",
+    title: "Blogs - For building connections",
     position: "top-right",
     dismissible: true,
     dismissAfter: 5000,
@@ -99,17 +99,8 @@ export const BlogRouter = () => {
           <Route path={ROUTES.EDIT_TEMPLATE} element={<EditTemplate />} />
           <Route path={ROUTES.NEW_TEMPLATE} element={<NewTemplate />} />
           
-          <Route path={ROUTES.SIGN_UP} element={<SignUpPage />} />
           <Route path={ROUTES.CONTACT} element={<Contact />} />
-
-          <Route path={ROUTES.LOGIN} element={<SignInPage />} />
-          <Route path={ROUTES.FORGET_EMAIL} element={<ForgetEmail />} />
-          <Route
-            path={ROUTES.PASSWORD_FORGET}
-            element={<PasswordForgetPage />}
-          />
           <Route path={ROUTES.ACCOUNT} element={<AccountPage />} />
-          <Route path={ROUTES.ADMIN} element={<AdminPage />} />
           <Route path={ROUTES.AUTH2} element={<Auth2 />} />
           <Route path={ROUTES.PROFILE} element ={<Profile/>} />
           <Route path={ROUTES.CONNECT_WITH_ME} element={<ConnectWithMeBlogs />} />

@@ -50,6 +50,8 @@ const NameCell = ({ rowData, dataKey, ...props }) => {
     );
   };
 const UserList = () => {
+  const authUser = useSelector(state => state.authState?.user);
+
   const [showDeleteModal, setShowDeleteModal ] = useState(false);
   const [selectedUser, setSelectedUser] = useState([]);
   const [sortColumn, setSortColumn] = useState();
@@ -66,7 +68,7 @@ const UserList = () => {
   useEffect(() =>{
     dispatch(getUserData());
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[authUser != null])
   const handleDeleteUser = (user) => {
     setSelectedUser(user)
     setShowDeleteModal(true);
@@ -188,7 +190,7 @@ const UserList = () => {
       }}
     </Cell>
   </Column>
-  <Column  fixed flexGrow sortable>
+  <Column  fixed resizable minWidth={100} sortable>
           <HeaderCell>Email</HeaderCell>
           <NameCell  dataKey="email">
             {rowData => 
@@ -197,16 +199,16 @@ const UserList = () => {
           </NameCell>
         </Column>
         <ColumnGroup header="Name" align="center">
-        <Column flexGrow colSpan={2}>
+        <Column resizable minWidth={100} colSpan={2}>
           <HeaderCell>First Name</HeaderCell>
           <Cell dataKey="firstName" />
         </Column>
-        <Column flexGrow>
+        <Column resizable minWidth={100}>
           <HeaderCell>Last Name</HeaderCell>
           <Cell dataKey="lastName" />
         </Column>
       </ColumnGroup>
-        <Column flexGrow>
+        <Column resizable minWidth={100}>
           <HeaderCell>Profile link</HeaderCell>
           <Cell>
             {

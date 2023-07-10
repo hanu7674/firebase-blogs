@@ -9,6 +9,8 @@ import { ReCaptchaV2, EReCaptchaV2Size,
 	EReCaptchaV2Theme, } from "react-recaptcha-x";
 import { notify } from "reapop";
 import { Link } from "react-router-dom";
+import Logo from "../../Assets/images/logo/logo-transparent-png.png";
+
 const ForgotEmail = () => {
   const isInvalid = useRef(false);
   const isUsernameValid = useRef(useSelector(state => state.userState.isUsernameValid))
@@ -45,6 +47,9 @@ const ForgotEmail = () => {
       className="col-md-5 col-sm-10 col-xs-12 col-lg-4  mx-auto mt-5 pt-5"
     >
       <Card body className="text-center border">
+      <div className='mb-2'>
+            <img style={{height: "64px", width: "300px"}} src={Logo}/>
+</div> 
       <Card.Title tag="h3 mt-5">Forgot your Email</Card.Title>
         <div>
           <div

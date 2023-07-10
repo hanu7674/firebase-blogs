@@ -10,7 +10,7 @@ import {VscChecklist} from 'react-icons/vsc'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBlog, faUsers } from '@fortawesome/free-solid-svg-icons';
 import BlogsList from './BlogsList';
-import { addFakeBlogs, getSentBlogsToReview, getTemplates, getTotalBlogs, getUsersData, getVisitorsCount, removeFakeBlogs } from '../../redux/ActionCreators';
+import { addBlog, addFakeBlogs, getSentBlogsToReview, getTemplates, getTotalBlogs, getUsersData, getVisitorsCount, removeFakeBlogs } from '../../redux/ActionCreators';
 import { Button } from 'react-bootstrap';
 import Chance from 'chance';
 import { serverTimestamp } from 'firebase/firestore';
@@ -58,6 +58,81 @@ function generateFakeData() {
   return fakeData;
 }
 
+const blogData =   {
+      "id": "91b7264d-9fb3-5a54-9df5-2a8e99317731",
+      "deleted": false,
+      "title": "Introducing Our Brand New Blog: Exploring the Intersection of Tech, Sports, and Business",
+      "postedBy": {
+          "photoURL": "https://firebasestorage.googleapis.com/v0/b/hanumanth-live.appspot.com/o/images%2Fprofile%2FfLqFo6bYlHdD0X45rhcnGluW1At1%2FScreenshot%20(14).png?alt=media&token=31b27a6f-9ed9-4d61-9d13-e524f5f7ca75",
+          "phone": "+917674070018",
+          "lastName": "HANUMANTHA REDDY",
+          "firstName": "LINGALA",
+          "timestamp": {
+              "seconds": 1686580950,
+              "nanoseconds": 874000000
+          },
+          "email": "hanumanth.lingala@gmail.com",
+          "uid": "fLqFo6bYlHdD0X45rhcnGluW1At1"
+      },
+      "timestamp": {
+          "seconds": 1686580950,
+          "nanoseconds": 874000000
+      },
+      "tags": [
+          "Technology",
+          "Gadgets",
+          "Innovation",
+          " Artificial Intelligence",
+          "Blockchain",
+          "Product Reviews",
+          "Sports",
+          "Football",
+          "Basketball",
+          "Extreme Sports",
+          "E-sports",
+          "Athlete Spotlights",
+          "Business",
+          "Entrepreneurship",
+          "Leadership",
+          "Marketing",
+          "Finance",
+          "Professional Development",
+          "Cryptocurrency",
+          "Bitcoin",
+          "Blockchain",
+          "Decentralized Finance",
+          "Market Trends",
+          "DeFi"
+      ],
+      "comments": [],
+      "category": "Technology",
+      "likes": [
+          {
+              "firstName": "LINGALA",
+              "lastName": "HANUMANTHA REDDY",
+              "email": "hanumanth.lingala@gmail.com",
+              "photoURL": "https://firebasestorage.googleapis.com/v0/b/hanumanth-live.appspot.com/o/images%2Fprofile%2FfLqFo6bYlHdD0X45rhcnGluW1At1%2FScreenshot%20(14).png?alt=media&token=31b27a6f-9ed9-4d61-9d13-e524f5f7ca75",
+              "uid": "fLqFo6bYlHdD0X45rhcnGluW1At1",
+              "phone": "+917674070018"
+          }
+      ],
+      "content": "<p>Welcome to our newly developed blog! We are thrilled to present a platform that delves into the fascinating worlds of technology, sports, and business. Here, we aim to provide engaging and insightful content that caters to enthusiasts and professionals alike. Let's dive into the diverse categories we will be covering and embark on a journey of discovery together!<br><br>1. <strong>Tech Talk:</strong><br>In this category, we will explore the latest trends, innovations, and breakthroughs in the ever-evolving world of technology. From cutting-edge gadgets to emerging technologies such as artificial intelligence and blockchain, we will keep you informed and captivated. Stay tuned for in-depth analyses, product reviews, and thought-provoking discussions that will expand your knowledge and spark your curiosity.<br>Tags: Technology, Gadgets, Innovation, Artificial Intelligence, Blockchain, Product Reviews<br><br>2.<strong> Sporting Spectacle:</strong><br>Sports bring people together like nothing else. In this category, we will celebrate the thrill and excitement of various sports, from popular ones like football and basketball to niche interests like extreme sports and e-sports. Through match analyses, athlete spotlights, and stories of sporting triumphs, we will explore the passion, dedication, and determination that make sports such a powerful force in our lives.<br>Tags: Sports, Football, Basketball, Extreme Sports, E-sports, Athlete Spotlights<br><br>3. <strong>Business Buzz:</strong><br>From startups to multinational corporations, the world of business is a dynamic and complex landscape. Here, we will delve into the intricacies of entrepreneurship, leadership, marketing, and finance. Whether you're a budding entrepreneur, a seasoned professional, or simply intrigued by the business world, our articles will provide valuable insights, practical tips, and thought-provoking perspectives.<br>Tags: Business, Entrepreneurship, Leadership, Marketing, Finance, Professional Development<br>4. <strong>Crypto Chronicles:</strong><br>The rise of cryptocurrency has revolutionized the financial industry. In this category, we will explore the world of digital currencies, blockchain technology, and the implications they have on various sectors. From analyzing the latest market trends to discussing the potential of decentralized finance (DeFi), we aim to demystify crypto and provide you with valuable information to navigate this exciting landscape.<br><br><strong>Conclusion:</strong><br>As we launch our blog, we invite you to join us on this exciting journey where we explore the realms of technology, sports, business, and crypto. Our aim is to provide informative and engaging content that sparks your imagination, expands your knowledge, and ignites meaningful conversations. Stay tuned for our upcoming articles, packed with valuable insights and captivating stories from these dynamic domains. Get ready to explore the interplay between tech, sports, business, and crypto like never before!<br><br></p>",
+      "lastUpdatedBy": {
+          "lastName": "HANUMANTHA REDDY",
+          "uid": "fLqFo6bYlHdD0X45rhcnGluW1At1",
+          "email": "hanumanth.lingala@gmail.com",
+          "photoURL": "https://firebasestorage.googleapis.com/v0/b/hanumanth-live.appspot.com/o/images%2Fprofile%2FfLqFo6bYlHdD0X45rhcnGluW1At1%2FScreenshot%20(14).png?alt=media&token=31b27a6f-9ed9-4d61-9d13-e524f5f7ca75",
+          "firstName": "LINGALA",
+          "phone": "+917674070018",
+          "timestamps": {
+              "seconds": 1686586859,
+              "nanoseconds": 919000000
+          }
+      },
+      "imgUrl": "https://firebasestorage.googleapis.com/v0/b/hanumanth-live.appspot.com/o/files%2FfLqFo6bYlHdD0X45rhcnGluW1At1%2F5_Blog_Layout_Best_Practices_From_2016-1%20(1).jpg?alt=media&token=a9bcc511-87ec-4cf4-8287-b1e950992537",
+      "trending": "yes"
+  }
+
 function generateFakeDataArray(num) {
   const fakeDataArray = [];
 
@@ -79,16 +154,21 @@ const AdminPage = () => {
   const dispatch = useDispatch();
   const Navigate = useNavigate()
   useEffect(() => {
+    setTimeout(()=>{
     dispatch(getTotalBlogs());
     dispatch(getUsersData());
     dispatch(getSentBlogsToReview());
     dispatch(getTemplates());
     dispatch(getVisitorsCount());
+  },1000)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  },[authUser]);
   const handleAddFakeBlogsData = async () => {
     const fakeDataArray = generateFakeDataArray(100);
     dispatch(addFakeBlogs(fakeDataArray))
+  }
+  const handleAddBlog = () => {
+    dispatch(addBlog(blogData))
   }
   const handleRemoveFakeBlogsData = () =>{
     dispatch(removeFakeBlogs())
@@ -194,6 +274,7 @@ const AdminPage = () => {
                             <Button onClick={handleAddFakeBlogsData}>Add fake data to the blogs</Button>
     <Button onClick={handleRemoveFakeBlogsData}>Remove fake blogs</Button>
     <Button onClick={handleTemplates}>View Templates</Button>
+    <Button onClick={handleAddBlog}>Add Blog</Button>
                              <UserList/>
      <BlogsList />
      <ReviewBlogs/>
@@ -207,10 +288,10 @@ const mapStateToProps = state => ({
   isAdmin: state.authState.user
 });
 const condition = (authUser) =>
-  authUser && !!authUser.roles[ROLES.ADMIN];
+  authUser && !!authUser?.roles[ROLES.ADMIN];
 export default compose(
   withEmailVerification,
-  withFirebase,
+  withFirebase, 
   withAuthorization(condition),
   connect(mapStateToProps)
 )(AdminPage);

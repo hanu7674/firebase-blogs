@@ -12,6 +12,7 @@ import { getUserMetaData } from "../../redux/ActionCreators";
 import { notify } from 'reapop';
 import Loading from "../Loading/loading";
 import Avatar from "react-avatar";
+import Logo from "../../Assets/images/logo/logo-transparent-png.png";
 
 const PasswordForgetPage = () => (
   <div>
@@ -49,7 +50,7 @@ const PasswordForgetFormBase = () => {
         dispatch(getUserMetaData(email))
         resetButton.current = true
     } else {
-      dispatch(notify({ title: "Hanumanth's blog Webapp", message: "Check your email! and Try again correctly.", status: 'warning'}));
+      dispatch(notify({ message: "Check your email! and Try again correctly.", status: 'warning'}));
     }
   }
   const onSubmit = (event) => {
@@ -65,7 +66,10 @@ const PasswordForgetFormBase = () => {
         <>
           <div className="col-md-5 col-sm-10 col-xs-12 col-lg-4  mx-auto mt-5 pt-5">
             <Card body className="text-center border">
-            <Card.Title tag="h3 mt-2">PLACEMENT's PORTAL</Card.Title>
+            <div className='mb-2'>
+            <img style={{height: "64px", width: "300px"}} src={Logo}/>
+</div>
+            <Card.Title tag="h3 mt-2">Forgot password</Card.Title>
             <div>
             <div className="text-secondary m-5" style={{ textAlign: "left" }} 
                       >
@@ -88,8 +92,9 @@ const PasswordForgetFormBase = () => {
             className="col-md-5 col-sm-10 col-xs-12 col-lg-4  mx-auto mt-5 pt-5"
           >
             <Card body className="text-center border">
-              {/* <Logo props={this.props} /> */}
-              {/* <p>Logo here</p> */}
+            <div className='mb-2'>
+            <img style={{height: "64px", width: "300px"}} src={Logo}/>
+</div>
               <div>
                 <Card.Title tag="h3" className="mt-2">Reset your password</Card.Title>
 

@@ -6,6 +6,7 @@ import { Card, ListGroup, Spinner,Button,
     Form as Rform, } from "react-bootstrap";
 import { mfaAuth, phoneOTPGenerator, confirmMFAAuth } from "../../redux/ActionCreators";
 import { ERROR_CODE_TOO_MANY_ATTEMPTS, ERROR_MSG_TOO_MANY_ATTEMPTS } from "../../redux/ActionTypes";
+import Logo from "../../Assets/images/logo/logo-transparent-png.png";
 
 const Auth2 = () => {
   const multifactors = useSelector((state) => state.authState.multifactors);
@@ -194,7 +195,10 @@ const Auth2 = () => {
             show2={showPhoneModal}
             onHide2={() => setShowPhoneModal(false)}
           />
-            <Card.Title tag="h3 mt-5" className="text-center">PLACEMENT's PORTAL</Card.Title>
+          <div className='mb-2'>
+            <img style={{height: "64px", width: "300px"}} src={Logo}/>
+</div>
+            <Card.Title tag="h3 mt-5" className="text-center">MFA</Card.Title>
            <div className="text-center"> Please select a Multi Factor Authentication (MFA)  method to continue</div> <br></br>
             <div className="text-left mb-3">Your account has these following methods: </div>
             <div className="m-auto col-10">

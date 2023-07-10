@@ -50,6 +50,7 @@ const NameCell = ({ rowData, dataKey, ...props }) => {
       );
     };
 const BlogsList = () => {
+  const authUser = useSelector(state => state.authState?.user);
 
   const loading = useSelector((state) => state.loading.loading);
   const blogsList = useSelector(state => state.blogs.totalBlogs?.list);
@@ -67,7 +68,7 @@ const BlogsList = () => {
   useEffect(() =>{
     dispatch(getTotalBlogs());
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[authUser != null])
   useEffect(() => {
     setLoading(true);
     setBlogs(blogsList);
@@ -198,26 +199,26 @@ const BlogsList = () => {
     </Cell>
   </Column>
 
-        <Column fixed minWidth={100} sortable flexGrow>
+        <Column fixed minWidth={100} sortable resizable>
           <HeaderCell>Title</HeaderCell>
           <Cell dataKey="title" />
         </Column>
 
-        <Column flexGrow sortable >
+        <Column resizable minWidth={100} sortable >
           <HeaderCell>Trending</HeaderCell>
           <Cell dataKey="trending" />
         </Column>
 
-        <Column flexGrow sortable >
+        <Column resizable minWidth={100} sortable >
           <HeaderCell>Category</HeaderCell>
           <Cell dataKey="category" />
         </Column>
-        <Column flexGrow >
+        <Column resizable minWidth={100} >
           <HeaderCell>Posted By</HeaderCell>
           <NameCell dataKey="postedBy">
           </NameCell>
         </Column>
-        <Column flexGrow >
+        <Column resizable minWidth={100} >
           <HeaderCell>Blog link</HeaderCell>
           <Cell>
             {

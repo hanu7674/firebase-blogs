@@ -11,6 +11,7 @@ import { getNotificaions } from "../../../redux/ActionCreators";
 import  Avatar  from "react-avatar";
 import { Badge, Button } from "rsuite";
 function NotificationOverlay() {
+	const authUser = useSelector(state => state.authState?.user);
 	const [show, setShow] = useState(false);
     const data = useSelector((state) => state.notification.notifications);
 	const Navigate = useNavigate()
@@ -20,9 +21,11 @@ function NotificationOverlay() {
 	};
 
     useEffect(() => {
+if(authUser?.uid){
         dispatch(getNotificaions())
+}
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+},[])
 	const viewMore = () => {
 		Navigate('/notifications')
 	}
@@ -109,5 +112,4 @@ function NotificationOverlay() {
 		</>
 	);
 }
-const condition = (authUser) => authUser
-export default compose(withAuthorization(condition))(NotificationOverlay);
+export default compose(NotificationOverlay);

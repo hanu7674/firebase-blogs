@@ -10,6 +10,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import * as ROUTES from '../constants/routes';
 import { withFirebase } from '../../firebase';
 import { logOut } from '../../redux/ActionCreators';
+import Logo from "../../Assets/images/logo/logo-transparent-png.png";
+
 // CSS
 import './index.css'
 import { chosenTheme } from './theme';
@@ -74,15 +76,13 @@ const NavigationAuth = ({ user }) => {
         <Link to={'/'} 
             className={activeLink === ROUTES.HOME ? 'nav-link active navbar-link' : 'nav-link navbar-link'} onClick={() => onUpdateActiveLink(ROUTES.HOME)}
             >
-          <span> &lt;</span>
-               <span className="logo-name" >
-                Hanumanth's  Blogs
-                </span>
-                <span >/&gt;</span></Link></Navbar.Brand>
+              <div >
+            <img style={{height: "64px", width: "200px"}} src={Logo}/>
+</div>
+          </Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav responsive-navbar-nav" />
         <Navbar.Collapse id="  basic-navbar-nav responsive-navbar-nav">
           <Nav className="me-auto">
-
           </Nav>
           <Nav >
                                   </Nav>
@@ -209,11 +209,10 @@ const NavigationNonAuth = () => {
           <Link to={'/'} 
             className={activeLink === ROUTES.LANDING ? 'nav-link active navbar-link ' : 'nav-link navbar-link'} onClick={() => onUpdateActiveLink(ROUTES.LANDING)}
             >
-          <span> &lt;</span>
-               <span className="logo-name" >
-                Hanumanth's  Blogs
-                </span>
-                <span >/&gt;</span></Link></Navbar.Brand>
+              <div >
+            <img style={{height: "64px", width: "200px"}} src={Logo}/>
+</div>
+          </Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav responsive-navbar-nav" />
         <Navbar.Collapse id="  basic-navbar-nav responsive-navbar-nav">
           <Nav className="me-auto">
