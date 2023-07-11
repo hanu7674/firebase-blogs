@@ -64,10 +64,12 @@ const TemplatesList = () => {
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState('');
 
-  useEffect(() =>{
-    dispatch(getTemplates());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[authUser != null])
+  useEffect(() => {
+    if(authUser?.id){
+            dispatch(getTemplates())
+    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
   const handleDeleteTemplate = (template) => {
     setSelectedTemplateId(template?.id)
     setShowDeleteModal(true);
@@ -189,12 +191,12 @@ const TemplatesList = () => {
       }}
     </Cell>
   </Column>
-  <Column  fixed resizable minWidth={100} sortable>
+  <Column  fixed  flexGrow={1} sortable>
           <HeaderCell>Name</HeaderCell>
           <Cell  dataKey="name"/>
         </Column>
         <ColumnGroup header="Posted By" align="center">
-        <Column resizable minWidth={100} colSpan={2}>
+        <Column  flexGrow={1} colSpan={2}>
           <HeaderCell>First Name</HeaderCell>
           <Cell >
             {
@@ -202,7 +204,7 @@ const TemplatesList = () => {
             }
             </Cell>
         </Column>
-        <Column resizable minWidth={100}>
+        <Column  flexGrow={1}>
           <HeaderCell>Last Name</HeaderCell>
           <Cell >
             {
@@ -211,7 +213,7 @@ const TemplatesList = () => {
             </Cell>        
             </Column>
       </ColumnGroup>
-        <Column resizable minWidth={100}>
+        <Column  flexGrow={1}>
           <HeaderCell>Template link</HeaderCell>
           <Cell>
             {

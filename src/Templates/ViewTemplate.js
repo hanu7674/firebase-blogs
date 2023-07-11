@@ -81,7 +81,7 @@ function ViewTemplate () {
                   <span className="heading-small text-muted">Title: </span><span className="heading-medium text-muted text-capitalize">{ excerpt(template.name , 50)}</span>
                   <div><span className="heading-small text-muted">Author : </span><span className="heading-medium text-muted text-capitalize">{template?.postedBy?.firstName + " " + template?.postedBy?.lastName}</span></div>
                   <div><span className="heading-small text-muted">Created At : </span><span className="heading-medium text-muted text-capitalize">
-                  <Timestamp relative date={template?.timestamp?.toDate().toDateString()} autoUpdate /></span>
+                  <Timestamp relative date={template?.timestamp?.toDate().toString()} autoUpdate /></span>
                   </div>
                 </div>
                 <div className="justify-content-right align-items-right align-content-right justify-content-space-between">

@@ -180,7 +180,8 @@ const handleDelete = (data) => {
           <span className="container fs-1 fw-bolder mt-2 text-capitalize">{blog?.title}</span>
         </div>
         <div>
-        <span className="container fs-6 mt-2 mb-3 text-capitalize meta-info">Published <Timestamp relative date={blog?.postedBy?.timestamp?.toDate().toDateString()} /></span>
+
+<span className="container fs-6 mt-2 mb-3 text-capitalize meta-info">Published <Timestamp relative autoUpdate date={blog?.timestamp?.toDate().toString()} /></span>
         </div>
               <div className="row mx-0">
                 <div className="col-md-8">

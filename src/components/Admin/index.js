@@ -154,6 +154,7 @@ const AdminPage = () => {
   const dispatch = useDispatch();
   const Navigate = useNavigate()
   useEffect(() => {
+      if(authUser?.id){
     setTimeout(()=>{
     dispatch(getTotalBlogs());
     dispatch(getUsersData());
@@ -161,6 +162,7 @@ const AdminPage = () => {
     dispatch(getTemplates());
     dispatch(getVisitorsCount());
   },1000)
+}
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[authUser]);
   const handleAddFakeBlogsData = async () => {

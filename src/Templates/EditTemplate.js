@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import {useMediaQuery } from 'utils-lazy-hook'
 import { saveAs } from 'file-saver';
 import { Modal } from "react-bootstrap";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import Timestamp from "react-timestamp";
 import { excerpt } from "../components/Blogs/utility";
 function useQuery() {
@@ -23,7 +23,7 @@ const EditTemplate = () => {
   const authUser = useSelector(state => state.authState.user);
   const loading = useSelector(state => state.templates.loading);
   const template = useSelector(state => state.templates.template);
-
+  const navigate = useNavigate();
   const addSuccess = useSelector((state) => state.templates?.addSuccess);
 const [show, setShow] = useState(false);
 const [design, setDesign] = useState();
@@ -128,12 +128,15 @@ let templateId = query.get("id");
           saveAs(blob, 'exported.txt');
         });
       };
-      function saveTemplate()  {
+      function saveTemplate(e)  {
+        e.preventDefault();
         templateRef.current?.editor?.exportHtml(function(data) {
         const { design, html } = data;
-        template.design_json = JSON.stringify(design);
-        template.html = html;
-        dispatch(editTemplate(template))
+        const design_json = JSON.stringify(design);
+          setDesign({...template,design_json,html}); 
+          console.log(template);
+          setShow(true);
+        // dispatch(editTemplate(template))
         });
       }      
       useEffect(()=>{
@@ -174,10 +177,15 @@ let templateId = query.get("id");
       const onReady = () => {
         if(typeof(templateId) === 'string'){
             const templateJson = {};
+                setTimeout(()=>{
+            if(typeof(template?.design_json) !== 'undefined'){
+
                 Object.assign(templateJson, JSON.parse(template?.design_json));
-              setTimeout(()=>{
-                templateRef.current.editor.loadDesign(templateJson);   
-              },200)
+
+                templateRef?.current?.editor.loadDesign(templateJson);   
+            }
+              },2000)
+            // }
             }
             else{
               setTimeout(()=>{
@@ -185,6 +193,66 @@ let templateId = query.get("id");
               },200)
             }
       };
+      const ShowSaveTemplateModal = ({show, onHide, design, design_name}) => {
+        const [name, setName] = useState(design_name ? design_name : '');
+        const dispatch = useDispatch();
+  
+        const onConfirm = () =>{
+            const designDetails = {
+              ...design,
+              name: name
+            };
+            if(name?.length >= 3){
+          dispatch(editTemplate(designDetails));
+          setShow(false)
+            }
+            else{
+              dispatch(notify({ status: "error", message: "Template name should be atleast 3 characters." }));
+            }
+        }
+        return (
+          <Modal
+          show={show}
+          onHide={onHide}
+          backdrop="static"
+          keyboard={false}
+          className="mt-5"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Save template</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <>
+            <div className="col-12 py-3">
+                <label
+              className="form-control-label"
+              htmlFor="title"
+            >Template Name :
+            </label>
+                  <input
+                    type="text"
+                    className="form-control input-text-box"
+                    placeholder="template name"
+                    name="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+            </>
+            
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={onHide}>
+              Cancel
+            </Button>
+            <Button variant="primary" disabled={name?.length <=3 } onClick={onConfirm}>Confirm</Button>
+          </Modal.Footer>
+        </Modal>
+        )
+      }
+      function viewTemplates() {
+        navigate("/templates");
+              } 
     return(
         <>
         <div className="mt-5 container">
@@ -201,12 +269,14 @@ let templateId = query.get("id");
         </> : <>
         {
             loading ? <Loader/> : <>
+    <ShowSaveTemplateModal show= {show} onHide={() => setShow(false)} design ={design} design_name={template?.name} />
+
             <div className="d-flex justify-content-between m-3">
                 <div className="justify-content-left align-items-left align-content-left justify-content-space-between">
-                  <span className="heading-small text-muted">Title: </span><span className="heading-medium text-muted text-capitalize">{ excerpt(template.name , 50)}</span>
+                  <span className="heading-small text-muted">Title: </span><span className="heading-medium text-muted text-capitalize">{ excerpt(template?.name , 50)}</span>
                   <div><span className="heading-small text-muted">Author : </span><span className="heading-medium text-muted text-capitalize">{template?.postedBy?.firstName + " " + template?.postedBy?.lastName}</span></div>
                   <div><span className="heading-small text-muted">Created At : </span><span className="heading-medium text-muted text-capitalize">
-                  <Timestamp relative date={template?.timestamp?.toDate().toDateString()} autoUpdate /></span>
+                  <Timestamp relative date={template?.timestamp?.toDate().toString()} autoUpdate /></span>
                   </div>
                 </div>
                 <div className="justify-content-right align-items-right align-content-right justify-content-space-between">
@@ -214,6 +284,8 @@ let templateId = query.get("id");
         <Button className="m-2" appearance='ghost' color="violet" onClick={exportPlainText}>Export to Plain Text</Button>
         {/* <Button className="m-2" appearance='ghost' color="violet" onClick={exportImage}>Export to Image</Button> */}
         <Button  className="m-2" appearance="primary" color="cyan" onClick={saveTemplate}>Save Changes</Button>
+<Button  className="m-2" appearance="primary" color="cyan" onClick={viewTemplates}>View Templates</Button>
+                  
                      </div>
                 </div>
             

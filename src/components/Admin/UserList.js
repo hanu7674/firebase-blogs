@@ -65,10 +65,12 @@ const UserList = () => {
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState('');
 
-  useEffect(() =>{
-    dispatch(getUserData());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[authUser != null])
+  useEffect(() => {
+    if(authUser?.id){
+            dispatch(getUserData())
+    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
   const handleDeleteUser = (user) => {
     setSelectedUser(user)
     setShowDeleteModal(true);
@@ -190,7 +192,7 @@ const UserList = () => {
       }}
     </Cell>
   </Column>
-  <Column  fixed resizable minWidth={100} sortable>
+  <Column  fixed  flexGrow={1}  sortable>
           <HeaderCell>Email</HeaderCell>
           <NameCell  dataKey="email">
             {rowData => 
@@ -198,17 +200,17 @@ const UserList = () => {
             }   
           </NameCell>
         </Column>
-        <ColumnGroup header="Name" align="center">
-        <Column resizable minWidth={100} colSpan={2}>
+        <ColumnGroup header="Name"  align="center">
+        <Column flexGrow={2}  colSpan={2}>
           <HeaderCell>First Name</HeaderCell>
           <Cell dataKey="firstName" />
         </Column>
-        <Column resizable minWidth={100}>
+        <Column flexGrow={2}>
           <HeaderCell>Last Name</HeaderCell>
           <Cell dataKey="lastName" />
         </Column>
       </ColumnGroup>
-        <Column resizable minWidth={100}>
+        <Column  flexGrow={3} align="center">
           <HeaderCell>Profile link</HeaderCell>
           <Cell>
             {
@@ -222,7 +224,7 @@ const UserList = () => {
             }
           </Cell>
         </Column>
-        <Column width={100}>
+    <Column flexGrow={1}>
           <HeaderCell>Actions</HeaderCell>
           <Cell>
             {

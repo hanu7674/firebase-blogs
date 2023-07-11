@@ -65,7 +65,7 @@ const NotificationContent = ({ notification }) => (
 						{notification?.timestamp ? (
 							<>
 								{" "}
-								<Timestamp relative date={notification?.timestamp?.toDate().toDateString()} autoUpdate />
+								<Timestamp relative date={notification?.timestamp?.toDate().toString()} autoUpdate />
 							</>
 						) : (
 							""

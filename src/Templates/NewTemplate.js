@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import {useMediaQuery } from 'utils-lazy-hook'
 import { saveAs } from 'file-saver';
 import { Modal } from "react-bootstrap";
+import { useNavigate } from "react-router";
 const NewTemplate = () => {
     const templateRef = useRef();
   const authUser = useSelector(state => state.authState.user);
@@ -17,7 +18,7 @@ const NewTemplate = () => {
   const addSuccess = useSelector((state) => state.templates?.addSuccess);
 const [show, setShow] = useState(false);
 const [design, setDesign] = useState();
-  
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSupported = useMediaQuery("(max-width: 1200px)")
     const options = {
@@ -117,7 +118,10 @@ const [design, setDesign] = useState();
           setDesign({design_json,html}); 
           setShow(true);
         });
-      }      
+      }     
+      function viewTemplates() {
+navigate("/templates");
+      } 
       useEffect(()=>{
         if(addSuccess){
           setShow(false)
@@ -236,7 +240,8 @@ const [design, setDesign] = useState();
         <Button className="m-2" appearance='ghost' color="violet" onClick={exportPlainText}>Export to Plain Text</Button>
         {/* <Button className="m-2" appearance='ghost' color="violet" onClick={exportImage}>Export to Image</Button> */}
         <Button  className="m-2" appearance="primary" color="cyan" onClick={saveTemplate}>Save Template</Button>
-     
+<Button  className="m-2" appearance="primary" color="cyan" onClick={viewTemplates}>View Templates</Button>
+          
       </div>
       </div>
       <EmailEditor 

@@ -227,6 +227,7 @@ import {
   startAfter,
   deleteDoc,
   setDoc,
+  Timestamp,
 } from "firebase/firestore";
 import { ref, set, orderByChild, get, push, runTransaction, TransactionResult, onValue, update, increment, } from "firebase/database";
 import {
@@ -1597,7 +1598,7 @@ export const addBlog = (blog) => {
       ...blog,
       id: chance.guid(),
       deleted: false,
-      timestamp: serverTimestamp(),
+      timestamp: Timestamp.now(),
       postedBy: {
         firstName: getState().authState?.user?.firstName,
         lastName: getState().authState?.user?.lastName,
@@ -1605,7 +1606,7 @@ export const addBlog = (blog) => {
         photoURL: getState().authState?.user?.photoURL,
         uid: getState().authState?.user?.id,
         phone: getState().authState?.user?.phoneNumber,
-        timestamp: serverTimestamp(),
+        timestamp: Timestamp.now(),
       },
     };
     dispatch(addBlogRequest());
@@ -1666,7 +1667,7 @@ export const sentBlogToReview = (blog) => {
       ...blog,
       id: id,
       deleted: false,
-      timestamp: serverTimestamp(),
+      timestamp: Timestamp.now(),
       postedBy: {
         firstName: getState().authState?.user?.firstName,
         lastName: getState().authState?.user?.lastName,
@@ -1674,7 +1675,7 @@ export const sentBlogToReview = (blog) => {
         photoURL: getState().authState?.user?.photoURL,
         uid: getState().authState?.user?.id,
         phone: getState().authState?.user?.phoneNumber,
-        timestamps: serverTimestamp(),
+        timestamps: Timestamp.now(),
       },
     };
     const notification = {
@@ -1688,7 +1689,7 @@ export const sentBlogToReview = (blog) => {
         blogId: blogDetails?.id,
         shortDescription: `A new blog posted by ${getState().authState?.user?.firstName + ' ' + getState().authState?.user?.lastName}.`,
         Description: null,
-        timestamp: serverTimestamp(),
+        timestamp: Timestamp.now(),
         postedBy: {
           firstName: getState().authState?.user?.firstName,
         lastName: getState().authState?.user?.lastName,
@@ -1696,7 +1697,7 @@ export const sentBlogToReview = (blog) => {
           photoURL: getState().authState?.user?.photoURL,
           uid: getState().authState?.user?.id,
           phone: getState().authState?.user?.phoneNumber,
-          timestamps: serverTimestamp(),
+          timestamps: Timestamp.now(),
         },
     }
     dispatch(addBlogRequest());
@@ -1721,7 +1722,7 @@ export const approveBlog = (blog) =>{
   return (dispatch, getState) =>{
     batch.set(blogDoc(blog?.id), { 
       ...blog,
-      timestamp: serverTimestamp(),
+      timestamp: Timestamp.now(),
         approvedBy: {
           firstName: getState().authState?.user?.firstName,
           lastName: getState().authState?.user?.lastName,
@@ -1729,7 +1730,7 @@ export const approveBlog = (blog) =>{
           photoURL: getState().authState?.user?.photoURL,
           uid: getState().authState?.user?.id,
           phone: getState().authState?.user?.phoneNumber,
-          timestamps: serverTimestamp(),
+          timestamps: Timestamp.now(),
         },
     });
     batch.update(blogReviewDoc(blog?.id), {
@@ -1745,7 +1746,7 @@ export const approveBlog = (blog) =>{
       toAll: false,
       deleted: false,
       toAllAdmins: false,
-      timestamp: serverTimestamp(),
+      timestamp: Timestamp.now(),
       approvedBy: {
           firstName: getState().authState?.user?.firstName,
           lastName: getState().authState?.user?.lastName,
@@ -1753,7 +1754,7 @@ export const approveBlog = (blog) =>{
           photoURL: getState().authState?.user?.photoURL,
           uid: getState().authState?.user?.id,
           phone: getState().authState?.user?.phoneNumber,
-          timestamps: serverTimestamp(),
+          timestamps: Timestamp.now(),
         },
     });
     batch.commit().then(() =>{
@@ -1798,7 +1799,7 @@ export const editBlog = (id, blog) => {
         photoURL: getState().authState?.user?.photoURL,
         uid: getState().authState?.user?.id,
         phone: getState().authState?.user?.phoneNumber,
-        timestamps: serverTimestamp(),
+        timestamps: Timestamp.now(),
       },
     };
     dispatch(editBlogRequest());
@@ -1864,7 +1865,7 @@ export const handleLike = (id) => {
               photoURL: getState().authState?.user?.photoURL,
               uid: getState().authState?.user?.id,
               phone: getState().authState?.user?.phoneNumber,
-              // timestamps: serverTimestamp()
+              // timestamps: Timestamp.now()
             }),
           })
             .then(() => {
@@ -1889,7 +1890,7 @@ export const handleLike = (id) => {
               photoURL: getState().authState?.user?.photoURL,
               uid: getState().authState?.user?.id,
               phone: getState().authState?.user?.phoneNumber,
-              // timestamps: serverTimestamp()
+              // timestamps: Timestamp.now()
             }),
           })
             .then(() => {
@@ -1938,7 +1939,7 @@ export const handleAddComment = (postId, data) => {
       replies: [],
       text: data.text,
       comId: data.comId,
-      timestamps: serverTimestamp(),
+      timestamps: Timestamp.now(),
     };
     setDoc(commentsDocRef(postId, data?.comId), commentData).then(() => {
       dispatch(addComment(data));
@@ -2088,7 +2089,7 @@ export const handleReplyComment = (postId, data) => {
       replies: [],
       text: data.text,
       comId: data.comId,
-      timestamps: serverTimestamp(),
+      timestamps: Timestamp.now(),
     };
     updateDoc(
       doc(
@@ -2124,7 +2125,7 @@ export const updateBloggerProfile = (profile, userId, username) => {
       photoURL: getState().authState?.user?.photoURL,
       uid: getState().authState?.user?.id,
       phone: getState().authState?.user?.phoneNumber,
-      timestamps: serverTimestamp(),
+      timestamps: Timestamp.now(),
     };
     const user = getState().authState.user;
     if(user?.roles["ADMIN"]) {
@@ -2191,7 +2192,7 @@ export const updateBloggerProfileImage = (profile, userId) => {
       photoURL: getState().authState?.user?.photoURL,
       uid: getState().authState?.user?.id,
       phone: getState().authState?.user?.phoneNumber,
-      timestamps: serverTimestamp(),
+      timestamps: Timestamp.now(),
     };
     dispatch(profileUpdateRequest());
     updateDoc(userRef(userId), profile)
@@ -2331,6 +2332,7 @@ export const submitGetInTouchForm = (formData) => {
   };
 };
 // Templates
+
  export const getTemplates = () => {
   return (dispatch, getState) => {
     const authUser = getState()?.authState?.user?.id;
@@ -2398,7 +2400,7 @@ export const addTemplate = (template) => {
       ...template,
       id: chance.guid(),
       deleted: false,
-      timestamp: serverTimestamp(),
+      timestamp: Timestamp.now(),
       postedBy: {
         firstName: getState().authState?.user?.firstName,
         lastName: getState().authState?.user?.lastName,
@@ -2406,7 +2408,7 @@ export const addTemplate = (template) => {
         photoURL: getState().authState?.user?.photoURL,
         uid: getState().authState?.user?.id,
         phone: getState().authState?.user?.phoneNumber,
-        timestamp: serverTimestamp(),
+        timestamp: Timestamp.now(),
       },
     }
     dispatch(addTemplatesRequest());
@@ -2447,7 +2449,7 @@ export const editTemplate = (template) => {
         photoURL: getState().authState?.user?.photoURL,
         uid: getState().authState?.user?.id,
         phone: getState().authState?.user?.phoneNumber,
-        timestamp: serverTimestamp(),
+        timestamp: Timestamp.now(),
       },
     }
     dispatch(editTemplatesRequest());
@@ -2984,7 +2986,7 @@ export const updateProfile = (profile, userId, username) => {
       photoURL: getState().authState?.user?.photoURL,
       uid: getState().authState?.user?.id,
       phone: getState().authState?.user?.phoneNumber,
-      timestamps: serverTimestamp(),
+      timestamps: Timestamp.now(),
     };
     dispatch(profileUpdateRequest());
     updateDoc(userRef(userId), profile)
@@ -3078,7 +3080,7 @@ export const updateNotificationById = (id, notification) => {
       photoURL: getState().authState?.user?.photoURL,
       uid: getState().authState?.user?.id,
       phone: getState().authState?.user?.phoneNumber,
-      timestamps: serverTimestamp(),
+      timestamps: Timestamp.now(),
     };
     dispatch(notificationsFetchByIdRequest());
     updateDoc(notificationById(id), notification)

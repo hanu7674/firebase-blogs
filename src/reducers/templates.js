@@ -54,7 +54,7 @@ const templatesReducer = (state = init, action) => {
         case GET_TEMPLATE_REQUEST:
         return {
         ...state,
-          isLoading: true,
+          loading: true,
         };
       case GET_TEMPLATE_SUCCESS:
         return {
@@ -74,7 +74,6 @@ const templatesReducer = (state = init, action) => {
             ...state,
           isAdding: true,
     addSuccess: false,
-
         };
       case ADD_TEMPLATE_SUCCESS:
         return {...state, 

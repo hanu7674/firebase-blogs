@@ -65,10 +65,12 @@ const BlogsList = () => {
   const [page, setPage] = React.useState(1);
   const [search, setSearch] = useState('');
 
-  useEffect(() =>{
-    dispatch(getTotalBlogs());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[authUser != null])
+  useEffect(() => {
+    if(authUser?.id){
+            dispatch(getTotalBlogs())
+    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
   useEffect(() => {
     setLoading(true);
     setBlogs(blogsList);
@@ -199,26 +201,26 @@ const BlogsList = () => {
     </Cell>
   </Column>
 
-        <Column fixed minWidth={100} sortable resizable>
+<Column fixed flexGrow={1} sortable >
           <HeaderCell>Title</HeaderCell>
           <Cell dataKey="title" />
         </Column>
 
-        <Column resizable minWidth={100} sortable >
+        <Column  flexGrow={1} sortable >
           <HeaderCell>Trending</HeaderCell>
           <Cell dataKey="trending" />
         </Column>
 
-        <Column resizable minWidth={100} sortable >
+        <Column  flexGrow={1} sortable >
           <HeaderCell>Category</HeaderCell>
           <Cell dataKey="category" />
         </Column>
-        <Column resizable minWidth={100} >
+        <Column  flexGrow={1} >
           <HeaderCell>Posted By</HeaderCell>
           <NameCell dataKey="postedBy">
           </NameCell>
         </Column>
-        <Column resizable minWidth={100} >
+        <Column  flexGrow={1} >
           <HeaderCell>Blog link</HeaderCell>
           <Cell>
             {

@@ -21,7 +21,7 @@ function NotificationOverlay() {
 	};
 
     useEffect(() => {
-if(authUser?.uid){
+if(authUser?.id){
         dispatch(getNotificaions())
 }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,7 +70,7 @@ if(authUser?.uid){
 											for more{" "}
 										</p>
 										<p className="mt-0 fs-6">
-											<Timestamp relative date={notification?.timestamp?.toDate().toDateString()} autoUpdate />
+											<Timestamp relative date={notification?.timestamp?.toDate().toString()} autoUpdate />
 										</p></Col>
 								</Row>
 							</article>

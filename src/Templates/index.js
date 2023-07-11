@@ -9,10 +9,12 @@ import { excerpt } from "../components/Blogs/utility";
 import { Button, Modal } from "rsuite";
 import { useNavigate } from "react-router";
 import {NEW_TEMPLATE } from "../Routers/routes";
+import Loading from "../components/Loading/loading";
 // import { Modal } from "react-bootstrap";
 const Templates = () => {
-  const templates = useSelector((state) => state.templates.templates);
+  const templates = useSelector((state) => state.templates?.templates);
   const authUser = useSelector((state) => state.authState?.user);
+  const [loading, setLoading] = useState(true);
   const [deleteTemplateId, setDeleteTemplateId] = useState(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const navigate = useNavigate();
@@ -21,9 +23,11 @@ const Templates = () => {
     if(authUser?.roles?.["ADMIN"])
     {
         dispatch(getTemplatesforAdmin())
+    setLoading(false)
     }
     else{
         dispatch(getTemplates());
+       setLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authUser]);
@@ -94,6 +98,8 @@ const Templates = () => {
                 <Button  className="m-2" appearance='ghost' color="violet"  onClick={createTemplate}>Create Template</Button>   
                 </div>
                 </div>
+                {
+    loading ? <div style={{height: '100vh'}}><Loading/></div> : 
           <div className="row me-auto align-items-center justify-content-center align-content-center">
             {templates &&
               templates?.map((template) => (
@@ -134,6 +140,7 @@ const Templates = () => {
 
             <div></div>
           </div>
+}
         </div>
       </div>
     </>

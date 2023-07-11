@@ -244,7 +244,7 @@ const DisplayNotification = () =>{
             {
               rowData => (
                 <>
-                <Timestamp relative date={rowData?.timestamp?.toDate().toDateString()} autoUpdate />
+                <Timestamp relative date={rowData?.timestamp?.toDate().toString()} autoUpdate />
                 </>
               )
             }

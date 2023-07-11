@@ -26,7 +26,7 @@ const FeatureBlogs = ({ blogs, title }) => {
           <div className="col-7 padding">
             <div className="text-start most-popular-font">{item.title}</div>
             <div className="text-start most-popular-font-meta">
-              {item?.postedBy?.timestamp?.toDate().toDateString()}
+              {item?.postedBy?.timestamp?.toDate().toString()}
             </div>
           </div>
           <div>
